@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXISTS Contacts (
+CREATE TABLE IF NOT EXISTS contacts (
     contact_id INT AUTO_INCREMENT PRIMARY KEY,
     full_name VARCHAR(255) NOT NULL,
     phone_number VARCHAR(20),
