@@ -9,6 +9,14 @@ import DeleteIcon from './icons/IconDelete.vue';
 
 import { ref, onMounted, onBeforeUnmount } from 'vue';
 
+const props = defineProps({
+    contactId: Number,
+    fullName: String,
+    phone: String,
+    email: String,
+    picture: String
+});
+
 const dropdownVisible = ref(false);
 
 const toggleDropdown = () => {
@@ -22,21 +30,21 @@ const closeDropdown = (event: MouseEvent) => {
 };
 
 onMounted(() => {
-    window.addEventListener('click', closeDropdown);
+    document.addEventListener('click', closeDropdown);
 });
 
 onBeforeUnmount(() => {
-    window.removeEventListener('click', closeDropdown);
+    document.removeEventListener('click', closeDropdown);
 });
 </script>
 
 <template>
-    <div class="contact">
+    <div class="contact" @mouseleave="closeDropdown">
         <div class="contact-entity">
             <DefaultIcon class="contact-pic" />
             <div class="contact-info">
-                <div class="contact-name">John Doe</div>
-                <div class="contact-number">+36 1 234 5678</div>
+                <div class="contact-name">{{ fullName }}</div>
+                <div class="contact-number">{{ phone }}</div>
             </div>
         </div>
 
@@ -48,8 +56,9 @@ onBeforeUnmount(() => {
                 <CallIcon />
             </button>
             <div class="contact-dropdown">
-                <button type="button" class="more-button" @click="toggleDropdown">
-                    <MoreIcon />
+                <button type="button" class="more-button" @click="toggleDropdown"
+                    :class="{ 'more-button-active': dropdownVisible }">
+                    <MoreIcon :class="{ 'more-button-active': dropdownVisible }" />
                 </button>
                 <div v-if="dropdownVisible" class="contact-dropdown-content">
                     <button type="button">
@@ -79,7 +88,7 @@ onBeforeUnmount(() => {
     justify-content: space-between;
     width: 100%;
     padding: 1rem;
-    font-family: 'LexendDeca';
+    font-family: 'LexendDeca', Arial, sans-serif;
     font-size: 16px;
     line-height: 24px;
     font-weight: 400;
@@ -193,5 +202,9 @@ onBeforeUnmount(() => {
 
 .contact-dropdown-content>*:not(:first-child):not(:last-child) {
     border-radius: 0;
+}
+
+.more-button-active {
+    background-color: var(--grey-80) !important;
 }
 </style>
