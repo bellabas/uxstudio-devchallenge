@@ -7,17 +7,14 @@ import SettingsIcon from './icons/IconSettings.vue';
 import FavouriteIcon from './icons/IconFavourite.vue';
 import DeleteIcon from './icons/IconDelete.vue';
 
-import { ref, onMounted, onBeforeUnmount } from 'vue';
+import { ref, computed } from 'vue';
+import { useContactsStore } from '../stores/useContactsStore';
+import type { IContact } from '@/types/iContact';
 
-const props = defineProps({
-    contactId: Number,
-    fullName: String,
-    phone: String,
-    email: String,
-    picture: String
-});
+const props = defineProps<IContact>();
 
 const dropdownVisible = ref(false);
+const contactsStore = useContactsStore();
 
 const toggleDropdown = () => {
     dropdownVisible.value = !dropdownVisible.value;
@@ -29,22 +26,24 @@ const closeDropdown = (event: MouseEvent) => {
     }
 };
 
-onMounted(() => {
-    document.addEventListener('click', closeDropdown);
+const contactPicture = computed(() => {
+    return props.profilePicBase64 ? `data:image/png;base64,${props.profilePicBase64}` : null;
 });
 
-onBeforeUnmount(() => {
-    document.removeEventListener('click', closeDropdown);
-});
+
+const deleteContact = async () => {
+    await contactsStore.deleteContact(props.contactId);
+};
 </script>
 
 <template>
     <div class="contact" @mouseleave="closeDropdown">
         <div class="contact-entity">
-            <DefaultIcon class="contact-pic" />
+            <img v-if="contactPicture" :src="contactPicture" class="contact-pic" />
+            <DefaultIcon v-else class="contact-pic" />
             <div class="contact-info">
                 <div class="contact-name">{{ fullName }}</div>
-                <div class="contact-number">{{ phone }}</div>
+                <div class="contact-number">{{ phoneNumber }}</div>
             </div>
         </div>
 
@@ -69,7 +68,7 @@ onBeforeUnmount(() => {
                         <FavouriteIcon />
                         Favourite
                     </button>
-                    <button type="button">
+                    <button type="button" @click="deleteContact">
                         <DeleteIcon />
                         Delete
                     </button>
