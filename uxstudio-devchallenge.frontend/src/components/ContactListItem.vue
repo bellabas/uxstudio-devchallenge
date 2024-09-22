@@ -7,7 +7,7 @@ import SettingsIcon from './icons/IconSettings.vue';
 import FavouriteIcon from './icons/IconFavourite.vue';
 import DeleteIcon from './icons/IconDelete.vue';
 
-import { ref, computed } from 'vue';
+import { ref, computed, onMounted } from 'vue';
 import { useContactsStore } from '../stores/useContactsStore';
 import type { IContact } from '@/types/iContact';
 
@@ -25,6 +25,10 @@ const closeDropdown = (event: MouseEvent) => {
         dropdownVisible.value = false;
     }
 };
+
+onMounted(() => {
+    document.addEventListener('click', closeDropdown);
+});
 
 const contactPicture = computed(() => {
     return props.profilePicBase64 ? `data:image/png;base64,${props.profilePicBase64}` : null;
