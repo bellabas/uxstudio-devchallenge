@@ -52,6 +52,7 @@
   src: url('./fonts/Glysa.otf') format('opentype');
   font-weight: normal;
   font-style: normal;
+  font-display: swap;
 }
 
 @font-face {
@@ -59,6 +60,7 @@
   src: url('./fonts/LexendDeca-VariableFont_wght.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
+  font-display: swap;
 }
 
 
