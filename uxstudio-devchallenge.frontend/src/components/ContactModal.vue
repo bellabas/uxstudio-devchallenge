@@ -5,7 +5,7 @@ import ChangeIcon from './icons/IconChange.vue';
 import DeleteIcon from './icons/IconDelete.vue';
 import AddIcon from './icons/IconAdd.vue';
 import { useContactsStore } from '../stores/useContactsStore';
-import { computed, reactive } from 'vue'
+import { computed, reactive, ref } from 'vue';
 import { type IContact } from '@/types/iContact';
 
 const props = defineProps({
@@ -53,17 +53,33 @@ const isContactPicture = computed(() => {
 });
 
 const contactPicture = computed(() => {
+    if (contact.profilePicBase64?.includes('data:image/png;base64,')) {
+        return contact.profilePicBase64;
+    }
     return `data:image/png;base64,${contact.profilePicBase64}`;
 });
 
-const uploadPicture = () => {
+const fileInput = ref<HTMLInputElement | null>(null);
 
+const uploadPicture = () => {
+    console.log('cucc');
+    fileInput.value?.click();
+};
+
+const handleFileChange = (event: Event) => {
+    const target = event.target as HTMLInputElement;
+    if (target.files && target.files[0]) {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+            contact.profilePicBase64 = e.target?.result as string;
+        };
+        reader.readAsDataURL(target.files[0]);
+    }
 };
 
 const deletePicture = () => {
     contact.profilePicBase64 = '';
 };
-
 </script>
 
 <template>
@@ -77,7 +93,8 @@ const deletePicture = () => {
                     <img v-if="isContactPicture" :src="contactPicture" class="contact-pic" />
                     <DefaultIcon v-else class="contact-pic" />
                     <div class="picture-button-container">
-                        <FancyButton :isPrimary="true" class="change-pic-button" v-if="isContactPicture">
+                        <FancyButton :isPrimary="true" class="change-pic-button" v-if="isContactPicture"
+                            @click="uploadPicture">
                             <template v-slot:icon>
                                 <ChangeIcon />
                             </template>
@@ -127,11 +144,16 @@ const deletePicture = () => {
                 </FancyButton>
             </div>
         </div>
+        <input type="file" ref="fileInput" @change="handleFileChange" class="hidden-upload" />
     </div>
 </template>
 
 <style>
 @import '../assets/base.css';
+
+.hidden-upload {
+    display: none;
+}
 
 .picture-button-container {
     display: flex;

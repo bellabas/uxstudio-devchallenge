@@ -46,6 +46,9 @@ const isContactPicture = computed(() => {
 });
 
 const contactPicture = computed(() => {
+    if (props.profilePicBase64?.includes('data:image/png;base64,')) {
+        return props.profilePicBase64;
+    }
     return `data:image/png;base64,${props.profilePicBase64}`;
 });
 
