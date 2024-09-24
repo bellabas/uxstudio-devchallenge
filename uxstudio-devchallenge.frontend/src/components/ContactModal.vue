@@ -119,15 +119,18 @@ const deletePicture = () => {
                 </div>
                 <div class="modal-content-item">
                     <div class="modal-label">Name</div>
-                    <input type="text" name="input-name" id="input-name" v-model="contact.fullName">
+                    <input type="text" name="input-name" id="input-name" v-model="contact.fullName"
+                        placeholder="Jamie Wright">
                 </div>
                 <div class="modal-content-item">
                     <div class="modal-label">Phone number</div>
-                    <input type="text" name="input-phone" id="input-phone" v-model="contact.phoneNumber" maxlength="20">
+                    <input type="text" name="input-phone" id="input-phone" v-model="contact.phoneNumber" maxlength="20"
+                        placeholder="+01 234 5678">
                 </div>
                 <div class="modal-content-item">
                     <div class="modal-label">Email address</div>
-                    <input type="text" name="input-email" id="input-email" v-model="contact.emailAddress">
+                    <input type="text" name="input-email" id="input-email" v-model="contact.emailAddress"
+                        placeholder="jamie.wright@mail.com">
                 </div>
                 <div class="modal-content-footer">
                     <FancyButton :is-primary="false" @click="closeModal">
@@ -217,6 +220,7 @@ const deletePicture = () => {
     height: 40px;
     color: var(--color-text-main);
     font-size: 14px;
+    font-family: 'LexendDeca', Arial, sans-serif;
     outline: 0;
 }
 
@@ -265,5 +269,10 @@ const deletePicture = () => {
     width: 68px;
     margin-left: 8px;
 
+}
+
+.modal-content-item input ::placeholder {
+    color: var(--color-text-tertiary);
+    font-family: 'LexendDeca', Arial, sans-serif;
 }
 </style>

@@ -1,13 +1,8 @@
 <script setup lang="ts">
-import { RouterLink, RouterView } from 'vue-router'
-import ContactListItem from './components/ContactListItem.vue'
+import { RouterLink, RouterView } from 'vue-router';
 </script>
 
 <template>
-  <header>
-
-  </header>
-  <ContactListItem />
   <RouterView />
 </template>
 

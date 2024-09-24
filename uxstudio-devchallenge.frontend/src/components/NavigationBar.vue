@@ -60,14 +60,16 @@ const closeAddContactModal = () => {
 .navbar-container {
     display: flex;
     z-index: 1;
-    border-color: var(--grey-60);
+    position: absolute;
+    left: 0px;
+    top: 0px;
     border-top: 1px solid var(--grey-60);
     border-bottom: 1px solid var(--grey-60);
     width: 100%;
-    height: 11.11%;
+    height: 11.11vh;
     justify-content: center;
     align-items: center;
-    position: static;
+    margin-top: 10.6vh;
 }
 
 .back-button-container {
@@ -82,6 +84,7 @@ const closeAddContactModal = () => {
 
 .navbar-main-section {
     width: 53.3%;
+    min-width: 392px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -90,6 +93,7 @@ const closeAddContactModal = () => {
 .page-title {
     margin-left: 12px;
     font-family: 'Glysa';
+    font-size: 32px;
 }
 
 .navbar-icons-container {
