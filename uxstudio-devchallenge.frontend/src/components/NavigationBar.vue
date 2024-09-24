@@ -32,9 +32,9 @@ const closeAddContactModal = () => {
             <div class="navbar-icons-container">
                 <SettingsIcon />
                 <ProfilePicIcon />
-                <FancyButton class="add-button" :isPrimary="true" @click="openAddContactModal" @click.stop>
+                <FancyButton :isPrimary="true" @click="openAddContactModal" @click.stop>
                     <template v-slot:icon>
-                        <AddIcon class="add-icon" />
+                        <AddIcon />
                     </template>
                     <template v-slot:text>
                         Add new
@@ -111,9 +111,6 @@ const closeAddContactModal = () => {
     border-radius: 25px;
 }
 
-.add-icon {
-    margin-right: 8px;
-}
 
 .light-dark-mode-container {
     display: flex;
@@ -122,5 +119,17 @@ const closeAddContactModal = () => {
 
 .light-button {
     margin-left: 24px;
+}
+
+@media only screen and (max-width: 768px) {
+    .navbar-main-section {
+        width: 80%;
+        min-width: fit-content;
+    }
+
+    .navbar-icons-container {
+        min-width: fit-content;
+    }
+
 }
 </style>

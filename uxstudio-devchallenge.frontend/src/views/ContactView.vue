@@ -9,7 +9,7 @@ import ContactList from '../components/ContactList.vue';
 
 <template>
   <div class="page-body">
-    <NavigationBar class="navbar">
+    <NavigationBar>
       <template v-slot:page-title>
         Contacts
       </template>

@@ -1,12 +1,18 @@
 <script setup lang="ts">
+import { computed } from 'vue';
+import { useSlots } from 'vue';
+
 const props = defineProps({
     isPrimary: Boolean,
 });
+
+const slots = useSlots();
+const hasTextSlot = computed(() => !!slots.text);
 </script>
 
 <template>
     <button type="button" :class="{ 'primary-button': props.isPrimary, 'secondary-button': !props.isPrimary }">
-        <div v-if="$slots.icon" class="button-icon">
+        <div v-if="$slots.icon" :class="['button-icon', { 'icon-with-text': hasTextSlot }]">
             <slot name="icon"></slot>
         </div>
         <div v-if="$slots.text" class="button-text">
@@ -66,5 +72,9 @@ button {
 .secondary-button:active,
 .secondary-button:active>svg {
     background-color: var(--color-button-secondary-active);
+}
+
+.icon-with-text {
+    margin-right: 8px;
 }
 </style>
