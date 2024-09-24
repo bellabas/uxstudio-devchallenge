@@ -62,7 +62,6 @@ const contactPicture = computed(() => {
 const fileInput = ref<HTMLInputElement | null>(null);
 
 const uploadPicture = () => {
-    console.log('cucc');
     fileInput.value?.click();
 };
 
@@ -194,12 +193,22 @@ const deletePicture = () => {
 .modal-content-item input {
     width: 100%;
     background-color: var(--color-input-inactive);
+    outline-width: 1px;
+    outline-color: var(--grey-60);
+    outline-style: solid;
     border: 1px;
     border-radius: 8px;
     border-color: var(--grey-60);
     padding: 12px;
     color: var(--color-text-main);
     font-size: 14px;
+}
+
+.modal-content-item input:focus {
+    background-color: var(--grey-60) !important;
+    outline-color: var(--grey-10) !important;
+    outline-width: 1px !important;
+    outline-style: solid;
 }
 
 .modal {
