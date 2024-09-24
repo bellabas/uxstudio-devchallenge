@@ -6,34 +6,58 @@ import DefaultIcon from './icons/IconDefault.vue';
 import SettingsIcon from './icons/IconSettings.vue';
 import FavouriteIcon from './icons/IconFavourite.vue';
 import DeleteIcon from './icons/IconDelete.vue';
-
-import { ref, computed, onMounted } from 'vue';
+import EditModal from './EditModal.vue';
+import FancyButton from './FancyButton.vue';
+import { ref, computed } from 'vue';
 import { useContactsStore } from '../stores/useContactsStore';
 import type { IContact } from '@/types/iContact';
 
 const props = defineProps<IContact>();
-
+const contactButtonsVisible = ref(false);
 const dropdownVisible = ref(false);
+const editModalVisible = ref(false);
 const contactsStore = useContactsStore();
 
 const toggleDropdown = () => {
     dropdownVisible.value = !dropdownVisible.value;
 };
 
-const closeDropdown = (event: MouseEvent) => {
-    if (!(event.target as HTMLElement).closest('.more-button')) {
+const handleMouseOver = (event: Event) => {
+    if ((event.target as HTMLElement).closest('.contact')) {
+        contactButtonsVisible.value = true;
+    }
+};
+
+const handleMouseLeave = (event: Event) => {
+    if ((event.target as HTMLElement).matches('.contact')) {
+        dropdownVisible.value = false;
+        contactButtonsVisible.value = false;
+    }
+};
+
+const closeDropdownClick = (event: Event) => {
+    if (!(event.target as HTMLElement).closest('.contact-dropdown')) {
         dropdownVisible.value = false;
     }
 };
 
-onMounted(() => {
-    document.addEventListener('click', closeDropdown);
+const isContactPicture = computed(() => {
+    return !(props.profilePicBase64 === '');
 });
 
 const contactPicture = computed(() => {
-    return props.profilePicBase64 ? `data:image/png;base64,${props.profilePicBase64}` : null;
+    return `data:image/png;base64,${props.profilePicBase64}`;
 });
 
+const openEditContactModal = () => {
+    dropdownVisible.value = false;
+    contactButtonsVisible.value = false;
+    editModalVisible.value = true;
+};
+
+const closeEditContactModal = () => {
+    editModalVisible.value = false;
+};
 
 const deleteContact = async () => {
     await contactsStore.deleteContact(props.contactId);
@@ -41,9 +65,9 @@ const deleteContact = async () => {
 </script>
 
 <template>
-    <div class="contact" @mouseleave="closeDropdown">
+    <div class="contact" @mouseover="handleMouseOver" @mouseleave="handleMouseLeave" @click="closeDropdownClick">
         <div class="contact-entity">
-            <img v-if="contactPicture" :src="contactPicture" class="contact-pic" />
+            <img v-if="isContactPicture" :src="contactPicture" class="contact-pic" />
             <DefaultIcon v-else class="contact-pic" />
             <div class="contact-info">
                 <div class="contact-name">{{ fullName }}</div>
@@ -51,35 +75,54 @@ const deleteContact = async () => {
             </div>
         </div>
 
-        <div class="contact-buttons">
-            <button type="button">
-                <MuteIcon />
-            </button>
-            <button type="button">
-                <CallIcon />
-            </button>
+        <div class="contact-buttons" v-if="contactButtonsVisible">
+            <FancyButton :isPrimary="false">
+                <template v-slot:icon>
+                    <MuteIcon />
+                </template>
+            </FancyButton>
+            <FancyButton :isPrimary="false">
+                <template v-slot:icon>
+                    <CallIcon />
+                </template>
+            </FancyButton>
             <div class="contact-dropdown">
-                <button type="button" class="more-button" @click="toggleDropdown"
+                <FancyButton :isPrimary="false" @click="toggleDropdown" @click.stop
                     :class="{ 'more-button-active': dropdownVisible }">
-                    <MoreIcon :class="{ 'more-button-active': dropdownVisible }" />
-                </button>
+                    <template v-slot:icon>
+                        <MoreIcon />
+                    </template>
+                </FancyButton>
                 <div v-if="dropdownVisible" class="contact-dropdown-content">
-                    <button type="button">
-                        <SettingsIcon />
-                        Edit
-                    </button>
-                    <button type="button">
-                        <FavouriteIcon />
-                        Favourite
-                    </button>
-                    <button type="button" @click="deleteContact">
-                        <DeleteIcon />
-                        Delete
-                    </button>
+                    <FancyButton :isPrimary="true" @click="openEditContactModal" @click.stop>
+                        <template v-slot:icon>
+                            <SettingsIcon />
+                        </template>
+                        <template v-slot:text>
+                            Edit
+                        </template>
+                    </FancyButton>
+                    <FancyButton :isPrimary="true">
+                        <template v-slot:icon>
+                            <FavouriteIcon />
+                        </template>
+                        <template v-slot:text>
+                            Favourite
+                        </template>
+                    </FancyButton>
+                    <FancyButton :isPrimary="true" @click="deleteContact" @click.stop>
+                        <template v-slot:icon>
+                            <DeleteIcon />
+                        </template>
+                        <template v-slot:text>
+                            Delete
+                        </template>
+                    </FancyButton>
                 </div>
             </div>
         </div>
     </div>
+    <editModal :isOpen="editModalVisible" @modal-close="closeEditContactModal" />
 </template>
 
 <style scoped>
@@ -93,8 +136,6 @@ const deleteContact = async () => {
     padding: 1rem;
     font-family: 'LexendDeca', Arial, sans-serif;
     font-size: 16px;
-    line-height: 24px;
-    font-weight: 400;
 }
 
 .contact-entity {
@@ -106,7 +147,7 @@ const deleteContact = async () => {
     height: 40px;
     border-radius: 25px;
     border: 1px;
-    border-color: grey;
+    border-color: var(--grey-60);
 }
 
 .contact-info {
@@ -118,40 +159,18 @@ const deleteContact = async () => {
 
 .contact-number {
     font-size: 12px;
-    line-height: 16px;
     color: var(--color-text-secondary);
 }
 
 .contact-buttons {
-    display: none;
-}
-
-.contact:hover .contact-buttons {
     display: flex;
     flex-direction: row;
 }
 
 .contact-buttons button {
-    background-color: var(--color-background);
     width: 40px;
-    height: 40px;
-    border-radius: 8px;
-    padding: 8px;
 }
 
-.contact-buttons button>svg {
-    background-color: var(--color-background);
-}
-
-.contact-buttons button:hover,
-.contact-buttons button:hover>svg {
-    background-color: var(--grey-90);
-}
-
-.contact-buttons button:active,
-.contact-buttons button:active>svg {
-    background-color: var(--grey-80);
-}
 
 .contact-dropdown {
     position: relative;
@@ -162,7 +181,7 @@ const deleteContact = async () => {
     display: flex;
     flex-direction: column;
     position: absolute;
-    background-color: var(--grey-80);
+    background-color: var(--color-button-secondary-active);
     min-width: 219px;
     z-index: 1;
     border-radius: 8px;
@@ -170,17 +189,13 @@ const deleteContact = async () => {
 }
 
 .contact-dropdown-content button {
-    background-color: var(--grey-80);
-    color: var(--color-text-primary);
+    background-color: var(--color-button-secondary-active);
     width: 100%;
-    display: flex;
-    align-items: center;
-    padding: 12px 16px;
+    justify-content: left;
 }
 
 .contact-dropdown-content button>svg {
-    background-color: var(--grey-80);
-    margin-right: 8px;
+    background-color: var(--color-button-secondary-active);
 }
 
 .contact-dropdown-content button:hover,
@@ -207,7 +222,8 @@ const deleteContact = async () => {
     border-radius: 0;
 }
 
-.more-button-active {
-    background-color: var(--grey-80) !important;
+.more-button-active,
+.more-button-active>svg {
+    background-color: var(--color-button-secondary-active) !important;
 }
 </style>

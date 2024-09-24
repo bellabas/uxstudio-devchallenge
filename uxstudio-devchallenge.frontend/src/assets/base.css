@@ -34,9 +34,13 @@
   --color-input-inactive: var(--grey-80);
   --color-input-active: var(--grey-60);
 
-  --color-button-default: var(--grey-60);
-  --color-button-hover: var(--grey-50);
-  --color-button-active: var(--grey-40);
+  --color-button-primary-default: var(--grey-60);
+  --color-button-primary-hover: var(--grey-50);
+  --color-button-primary-active: var(--grey-40);
+
+  --color-button-secondary-default: var(--grey-100);
+  --color-button-secondary-hover: var(--grey-90);
+  --color-button-secondary-active: var(--grey-80);
 }
 
 *,
@@ -63,28 +67,6 @@
   font-display: swap;
 }
 
-
 button {
   border: 0;
-  background-color: var(--color-button-default);
-}
-
-button:hover {
-  background-color: var(--color-button-hover);
-}
-
-button:active {
-  background-color: var(--color-button-active);
-}
-
-button>svg {
-  background-color: var(--color-button-default);
-}
-
-button:hover>svg {
-  background-color: var(--color-button-hover);
-}
-
-button:active>svg {
-  background-color: var(--color-button-active);
 }
