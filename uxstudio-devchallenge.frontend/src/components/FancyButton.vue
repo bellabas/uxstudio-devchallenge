@@ -28,11 +28,7 @@ button {
     font-size: 14px;
     display: flex;
     align-items: center;
-    justify-content: center;
-}
-
-.button-text {
-    margin-left: 0.5rem;
+    justify-content: space-around;
 }
 
 .button-text,
