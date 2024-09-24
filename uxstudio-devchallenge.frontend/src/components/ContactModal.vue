@@ -38,13 +38,24 @@ const closeModal = () => {
 };
 
 const saveModal = async () => {
-    await contactsStore.updateContact({
-        contactId: contact.contactId,
-        fullName: contact.fullName,
-        phoneNumber: contact.phoneNumber,
-        emailAddress: contact.emailAddress,
-        profilePicBase64: contact.profilePicBase64
-    } as IContact);
+    if (contact.contactId === '') {
+        await contactsStore.createContact({
+            fullName: contact.fullName,
+            phoneNumber: contact.phoneNumber,
+            emailAddress: contact.emailAddress,
+            profilePicBase64: contact.profilePicBase64
+        } as IContact);
+    }
+    else {
+        await contactsStore.updateContact({
+            contactId: contact.contactId,
+            fullName: contact.fullName,
+            phoneNumber: contact.phoneNumber,
+            emailAddress: contact.emailAddress,
+            profilePicBase64: contact.profilePicBase64
+        } as IContact);
+    }
+
     emit('modal-close');
 };
 

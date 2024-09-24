@@ -45,6 +45,13 @@ export const useContactsStore = defineStore('contacts', {
             try {
                 await ApiService.post<IContact>(`/contacts`, contact);
 
+                let maxId = 1;
+                for (let index = 0; index < this.contacts.length; index++) {
+                    if (this.contacts[index].contactId > maxId) {
+                        maxId = this.contacts[index].contactId;
+                    }
+                }
+                contact.contactId = maxId + 1;
                 this.contacts.push(contact);
             } catch (error) {
                 console.error('Failed to create contact:', error);
