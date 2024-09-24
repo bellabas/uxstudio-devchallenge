@@ -6,7 +6,7 @@ import DefaultIcon from './icons/IconDefault.vue';
 import SettingsIcon from './icons/IconSettings.vue';
 import FavouriteIcon from './icons/IconFavourite.vue';
 import DeleteIcon from './icons/IconDelete.vue';
-import EditModal from './EditModal.vue';
+import EditModal from './ContactModal.vue';
 import FancyButton from './FancyButton.vue';
 import { ref, computed } from 'vue';
 import { useContactsStore } from '../stores/useContactsStore';
@@ -70,8 +70,8 @@ const deleteContact = async () => {
             <img v-if="isContactPicture" :src="contactPicture" class="contact-pic" />
             <DefaultIcon v-else class="contact-pic" />
             <div class="contact-info">
-                <div class="contact-name">{{ fullName }}</div>
-                <div class="contact-number">{{ phoneNumber }}</div>
+                <h3 class="contact-name">{{ props.fullName }}</h3>
+                <div class="contact-number">{{ props.phoneNumber }}</div>
             </div>
         </div>
 
@@ -96,7 +96,7 @@ const deleteContact = async () => {
                 <div v-if="dropdownVisible" class="contact-dropdown-content">
                     <FancyButton :isPrimary="true" @click="openEditContactModal" @click.stop>
                         <template v-slot:icon>
-                            <SettingsIcon class="dropdown-icon" />
+                            <SettingsIcon class="dropdown-icon" color="var(--color-text-secondary)" />
                         </template>
                         <template v-slot:text>
                             Edit
@@ -104,7 +104,7 @@ const deleteContact = async () => {
                     </FancyButton>
                     <FancyButton :isPrimary="true">
                         <template v-slot:icon>
-                            <FavouriteIcon class="dropdown-icon" />
+                            <FavouriteIcon class="dropdown-icon" color="var(--color-text-secondary)" />
                         </template>
                         <template v-slot:text>
                             Favourite
@@ -112,7 +112,7 @@ const deleteContact = async () => {
                     </FancyButton>
                     <FancyButton :isPrimary="true" @click="deleteContact" @click.stop>
                         <template v-slot:icon>
-                            <DeleteIcon class="dropdown-icon" />
+                            <DeleteIcon class="dropdown-icon" color="var(--color-text-secondary)" />
                         </template>
                         <template v-slot:text>
                             Delete
@@ -122,7 +122,12 @@ const deleteContact = async () => {
             </div>
         </div>
     </div>
-    <editModal :isOpen="editModalVisible" @modal-close="closeEditContactModal" />
+    <EditModal :isOpen="editModalVisible" :contactId="contactId" :fullName="fullName" :phoneNumber="phoneNumber"
+        :emailAddress="emailAddress" :profilePicBase64="profilePicBase64" @modal-close="closeEditContactModal">
+        <template v-slot:header>
+            Edit contact
+        </template>
+    </EditModal>
 </template>
 
 <style scoped>
@@ -170,7 +175,6 @@ const deleteContact = async () => {
 .contact-buttons button {
     width: 40px;
 }
-
 
 .contact-dropdown {
     position: relative;
