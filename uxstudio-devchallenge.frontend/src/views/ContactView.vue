@@ -40,9 +40,17 @@ import ContactList from '../components/ContactList.vue';
   flex-direction: column;
   border-left: 1px solid var(--grey-60);
   border-right: 1px solid var(--grey-60);
+  padding: 8px;
 }
 
 .contact-list {
   margin-top: calc(var(--navbar-height) + var(--navbar-margin-top));
+}
+
+
+@media only screen and (max-width: 600px) {
+  .page-main {
+    min-width: 100%;
+  }
 }
 </style>

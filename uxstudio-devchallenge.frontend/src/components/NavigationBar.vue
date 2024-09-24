@@ -88,10 +88,10 @@ const closeAddContactModal = () => {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    padding: 0px 24px;
 }
 
 .page-title {
-    margin-left: 12px;
     font-family: 'Glysa';
     font-size: 32px;
 }
@@ -101,8 +101,8 @@ const closeAddContactModal = () => {
     justify-content: space-between;
     align-items: center;
     width: 32.22%;
+    max-width: 220px;
     min-width: 190px;
-    margin-right: 12px;
 }
 
 .navbar-icons-container>button {
@@ -121,15 +121,25 @@ const closeAddContactModal = () => {
     margin-left: 24px;
 }
 
-@media only screen and (max-width: 768px) {
+@media only screen and (max-width: 600px) {
     .navbar-main-section {
-        width: 80%;
+        width: 75%;
         min-width: fit-content;
     }
 
-    .navbar-icons-container {
-        min-width: fit-content;
+    .page-title {
+        font-size: 18px;
     }
+
+    .back-button {
+        margin-right: 3px;
+    }
+
+    .light-button {
+        margin-left: 3px;
+    }
+
+
 
 }
 </style>

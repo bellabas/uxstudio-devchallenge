@@ -194,8 +194,6 @@ const deleteContact = async () => {
     margin-top: 0.5rem;
 }
 
-
-
 .contact-dropdown-content button {
     background-color: var(--color-button-secondary-active);
     width: 100%;
@@ -233,5 +231,13 @@ const deleteContact = async () => {
 .more-button-active,
 .more-button-active>svg {
     background-color: var(--color-button-secondary-active) !important;
+}
+
+
+@media only screen and (max-width: 768px) {
+    .contact-dropdown-content {
+        min-width: 115px;
+        right: 0;
+    }
 }
 </style>
