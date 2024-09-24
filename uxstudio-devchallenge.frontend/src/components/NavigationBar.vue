@@ -66,10 +66,10 @@ const closeAddContactModal = () => {
     border-top: 1px solid var(--grey-60);
     border-bottom: 1px solid var(--grey-60);
     width: 100%;
-    height: 11.11vh;
+    height: var(--navbar-height);
     justify-content: center;
     align-items: center;
-    margin-top: 10.6vh;
+    margin-top: var(--navbar-margin-top);
 }
 
 .back-button-container {

@@ -22,6 +22,8 @@ import ContactList from '../components/ContactList.vue';
 </template>
 
 <style scoped>
+@import '../assets/base.css';
+
 .page-body {
   width: 100%;
   height: 100%;
@@ -41,6 +43,6 @@ import ContactList from '../components/ContactList.vue';
 }
 
 .contact-list {
-  margin-top: 21.71vh;
+  margin-top: calc(var(--navbar-height) + var(--navbar-margin-top));
 }
 </style>

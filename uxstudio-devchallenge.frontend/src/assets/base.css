@@ -41,6 +41,9 @@
   --color-button-secondary-default: var(--grey-100);
   --color-button-secondary-hover: var(--grey-90);
   --color-button-secondary-active: var(--grey-80);
+
+  --navbar-height: 11.11vh;
+  --navbar-margin-top: 10.6vh;
 }
 
 *,
