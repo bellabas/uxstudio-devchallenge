@@ -154,8 +154,7 @@ const deleteContact = async () => {
     width: 40px;
     height: 40px;
     border-radius: 25px;
-    border: 1px;
-    border-color: var(--grey-60);
+    border: 1px solid var(--grey-60);
 }
 
 .contact-info {

@@ -15,7 +15,7 @@ const props = defineProps({
     </button>
 </template>
 
-<style>
+<style scoped>
 @import '../assets/base.css';
 
 button {

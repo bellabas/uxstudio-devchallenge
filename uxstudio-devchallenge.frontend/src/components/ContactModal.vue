@@ -147,7 +147,7 @@ const deletePicture = () => {
     </div>
 </template>
 
-<style>
+<style scoped>
 @import '../assets/base.css';
 
 .hidden-upload {
@@ -193,22 +193,17 @@ const deletePicture = () => {
 .modal-content-item input {
     width: 100%;
     background-color: var(--color-input-inactive);
-    outline-width: 1px;
-    outline-color: var(--grey-60);
-    outline-style: solid;
-    border: 1px;
+    border: 1px solid var(--grey-60);
     border-radius: 8px;
-    border-color: var(--grey-60);
     padding: 12px;
     color: var(--color-text-main);
     font-size: 14px;
+    outline: 0;
 }
 
 .modal-content-item input:focus {
-    background-color: var(--grey-60) !important;
-    outline-color: var(--grey-10) !important;
-    outline-width: 1px !important;
-    outline-style: solid;
+    background-color: var(--grey-60);
+    border: 1px solid var(--grey-10);
 }
 
 .modal {
@@ -256,8 +251,7 @@ button {
     width: 88px;
     height: 88px;
     border-radius: 44px;
-    border: 1px;
-    border-color: var(--grey-70);
+    border: 1px solid var(--grey-70);
 }
 
 .picture-container {
