@@ -38,7 +38,7 @@ const closeModal = () => {
 };
 
 const saveModal = async () => {
-    if (contact.contactId === '') {
+    if (contact.contactId === 0) {
         await contactsStore.createContact({
             fullName: contact.fullName,
             phoneNumber: contact.phoneNumber,

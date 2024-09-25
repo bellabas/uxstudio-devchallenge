@@ -197,6 +197,7 @@ const deleteContact = async () => {
 .contact-dropdown-content button {
     background-color: var(--color-button-secondary-active);
     width: 100%;
+    height: 44px;
     justify-content: left;
 }
 
