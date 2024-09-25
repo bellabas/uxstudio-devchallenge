@@ -256,6 +256,7 @@ const deletePicture = () => {
 
 .modal-content {
     min-width: 364px;
+    min-height: 550px;
     height: 60%;
     align-items: center;
     border-radius: 8px;
@@ -285,5 +286,12 @@ const deletePicture = () => {
 .modal-content-item input ::placeholder {
     color: var(--color-text-tertiary);
     font-family: 'LexendDeca', Arial, sans-serif;
+}
+
+@media only screen and (max-width: 600px) {
+    .modal-content {
+        min-width: 100vw;
+        min-height: 100vh;
+    }
 }
 </style>
