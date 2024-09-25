@@ -148,6 +148,8 @@ const deleteContact = async () => {
 
 .contact-entity {
     display: flex;
+    max-width: 60%;
+    overflow: hidden;
 }
 
 .contact-pic {

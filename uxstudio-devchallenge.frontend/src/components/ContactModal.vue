@@ -56,7 +56,7 @@ const saveModal = async () => {
         } as IContact);
     }
 
-    emit('modal-close');
+    closeModal();
 };
 
 const isContactPicture = computed(() => {

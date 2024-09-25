@@ -26,14 +26,14 @@ import ContactList from '../components/ContactList.vue';
 
 .page-body {
   width: 100%;
-  height: 100%;
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
 .page-main {
-  height: 100%;
+  min-height: 100vh;
   width: 53.3%;
   min-width: 392px;
   display: flex;
@@ -45,6 +45,7 @@ import ContactList from '../components/ContactList.vue';
 
 .contact-list {
   margin-top: calc(var(--navbar-height) + var(--navbar-margin-top));
+  margin-bottom: 132px;
 }
 
 
