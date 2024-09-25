@@ -63,6 +63,7 @@ const closeAddContactModal = () => {
     border-bottom: 1px solid var(--grey-60);
     width: 100%;
     height: var(--navbar-height);
+    min-height: 75px;
     justify-content: center;
     align-items: center;
     margin-top: var(--navbar-margin-top);
